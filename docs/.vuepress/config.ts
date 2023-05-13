@@ -1,6 +1,7 @@
 import { defineConfig } from "vuepress/config";
 
 module.exports = defineConfig({
+    base: "/better-self/",
     title: 'Zhuanxu',
     description: '个人博客',
     theme: 'reco',
