@@ -50,7 +50,7 @@ module.exports = defineConfig({
                 title: "探索篇",
                 path: "/explore/vite 原理",
                 children: [
-                    { title: "vite 原理浅析", path: "/explore/vite 原理" },
+                    { title: "vite 原理浅析", path: "/explore/vite" },
                 ]
             },
             {
@@ -65,7 +65,4 @@ module.exports = defineConfig({
             }
         ]
     },
-    markdown: {
-        plugins: []
-    }
 })

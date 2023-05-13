@@ -1,10 +1,11 @@
 {
   "name": "zhuanxu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "my personal blog",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "publish": "sh deploy.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
