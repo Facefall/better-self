@@ -14,7 +14,9 @@ git add -A
 git commit -m 'deploy'
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-# git push -f https://Facefall.github.io/better-self main:gh-pages
-git push -f git@github.com:facefall/better-self.git main:gh-pages
+
+git push -f https://github.com/Facefall/better-self.git  master:gh-pages
+
+open https://facefall.github.io/better-self/
 
 cd -
