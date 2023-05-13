@@ -33,9 +33,9 @@ module.exports = defineConfig({
             },
             {
                 title: "rust 篇",
-                path: "/rust/index",
+                path: "/rust/study",
                 children: [
-                    { title: "rust 起航", path: "/rust/index", }
+                    { title: "rust 起航", path: "/rust/study", }
                 ]
             },
             {
