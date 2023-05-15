@@ -1,11 +1,19 @@
-import { defineConfig } from "vuepress/config";
+import { defineConfig, } from "vuepress/config";
 
 module.exports = defineConfig({
     base: "/better-self/",
     title: 'Zhuanxu',
     description: '个人博客',
-    theme: 'reco',
+    extraWatchFiles: [
+        '.vuepress/config.ts',
+        '**/*.md',
+        '**/*.styl'
+    ],
+    markdown: {
+        toc: { includeLevel: [1, 2] },
+    },
     themeConfig: {
+        smoothScroll: true,
         nav: [
             { text: '首页', link: '/' },
             {
@@ -18,18 +26,50 @@ module.exports = defineConfig({
         sidebar: [
             {
                 title: '欢迎学习',
-                path: '/',
+                path: '/index',
                 collapsable: false, // 不折叠
                 children: [
                     { title: "个人简言", path: "/" }
                 ]
             },
             {
-                title: "Typescript 篇",
-                path: "/Typescript/tips",
+                title: "Typescript + React",
+                path: "/Typescript/react",
                 children: [
-                    { title: "技巧", path: "/Typescript/tips" },
-                    { title: "react 实战", path: "/Typescript/react" }
+                    {
+                        title: "BASIC",
+                        path: "/Typescript/basic/setup",
+                        children: [
+                            { title: "Setup", path: "/Typescript/basic/setup" },
+                            {
+                                title: "Getting Started", path: "/Typescript/basic/getting-started/typing-component-props",
+                                children: [
+                                    { title: "Typing Component Props", path: "/Typescript/basic/getting-started/typing-component-props" },
+                                    { title: "Function Components", path: "/Typescript/basic/getting-started/function-components" },
+                                ]
+                            },
+                            { title: "Troubleshooting Handbook", path: "/Typescript/basic/troubleshooting-handbook" },
+                            { title: "Recommendations React + TypeScript", path: "/Typescript/basic/recommendations" },
+                            { title: "Editor Tooling and Integration", path: "/Typescript/basic/editor-tooling-and-integration" },
+                            { title: "Linting", path: "/Typescript/basic/linting" },
+                            { title: "Examples", path: "/Typescript/basic/examples" },
+                        ]
+                    },
+                    {
+                        title: "HOC",
+                        path: "/Typescript/hoc/intro",
+                        children: [
+                            { title: "Intro", path: "/Typescript/hoc/intro" },
+                            { title: "Full HOC Example", path: "/Typescript/hoc/full-hoc-example" },
+                        ]
+                    },
+                    {
+                        title: "Advanced",
+                        path: "/Typescript/advanced/intro",
+                        children: [
+                            { title: "Intro", path: "/Typescript/advanced/intro" }
+                        ]
+                    }
                 ],
             },
             {
@@ -66,4 +106,4 @@ module.exports = defineConfig({
             }
         ]
     },
-})
+});
