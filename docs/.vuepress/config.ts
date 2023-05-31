@@ -46,6 +46,7 @@ module.exports = defineConfig({
                                 children: [
                                     { title: "Typing Component Props", path: "/Typescript/basic/getting-started/typing-component-props" },
                                     { title: "Function Components", path: "/Typescript/basic/getting-started/function-components" },
+                                    // { title: "Hooks", path: "/Typescript/basic/getting-started/hooks" },
                                 ]
                             },
                             { title: "Troubleshooting Handbook", path: "/Typescript/basic/troubleshooting-handbook" },
