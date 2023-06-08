@@ -10,7 +10,8 @@ module.exports = defineConfig({
         '**/*.styl'
     ],
     markdown: {
-        toc: { includeLevel: [1, 2] },
+        //https://github.com/cmaas/markdown-it-table-of-contents
+        toc: { includeLevel: [1, 2, 3, 4, 5] },
     },
     themeConfig: {
         smoothScroll: true,

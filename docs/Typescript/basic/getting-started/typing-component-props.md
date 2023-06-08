@@ -3,6 +3,7 @@
 
 这是为熟悉 TypeScript 的 React 开发人员提供的基本方向和参考资料。
 
+[[toc]]
 ### Basic Prop Types Examples
 
 在 React + TypeScript 的项目中，你可能会使用到的 TypeScript 类型：
@@ -82,7 +83,7 @@ value = null;
 
 ### Useful React Prop Type Examples
 
-一些使用将 React 组件当做 props 传递的常用方式
+一些将 React 组件当做 props 传递的常用方式
 
 ```tsx
 export declare interface AppProps {
@@ -106,6 +107,7 @@ export declare interface AppProps {
 Quote @ferdaber: A more technical explanation is that a valid React node is not the same thing as what is returned by React.createElement. Regardless of what a component ends up rendering, React.createElement always returns an object, which is the JSX.Element interface, but React.ReactNode is the set of all possible return values of a component.
 
 JSX.Element -> Return value of React.createElement
+
 React.ReactNode -> Return value of a component
 
 :::
@@ -120,14 +122,14 @@ Types 还是 Interfaces 都可以用来定义 Props 和 state，所以该怎么�
 
 #### TL;DR
 
-使用 Interface 直到你需要用 Type - (orta)[https://twitter.com/orta/status/1356129195835973632?s=20]
+使用 Interface 直到你需要用 Type - [orta](https://twitter.com/orta/status/1356129195835973632?s=20)
 
 #### More Advice
 
 以下是几点经验法则：
 
 * 当你在编写库、npm 包时，总是用 `interface` 定义 public API, 这样当一些类型丢失时，使用这些第三方包的用户能通过 `declaration merging` 的方式补全类型
-* 在定义React组件的 Props和 State时，考虑使用 `type`， 能提供一致性和更强的类型约束
+* 在定义 React 组件的 Props 和 State 时，考虑使用 `type`， 能提供一致性和更强的类型约束
 
 具体解释： [Interface vs Type alias in TypeScript 2.7](https://medium.com/@martin_hotell/interface-vs-type-alias-in-typescript-2-7-2a8f1777af4c)
 

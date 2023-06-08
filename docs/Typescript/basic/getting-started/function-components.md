@@ -23,25 +23,20 @@ const App = ({ message }: { message: string }) => <div>{message}</div>;
 ```
 > Tip: You might use [Paul Shen's VS Code Extension](https://marketplace.visualstudio.com/items?itemName=paulshen.paul-typescript-toolkit) to automate the type destructure declaration (incl a [keyboard shortcut](https://twitter.com/_paulshen/status/1392915279466745857?s=20)).
 
-::: tip  `React.FC` 不推荐使用。 那 `React.FunctionComponent` 或者 `React.VoidFunctionComponent` 呢？
-
+::: tip  | `React.FC` 不推荐使用。 那 `React.FunctionComponent` 或者 `React.VoidFunctionComponent` 呢？
 你可能看到过一下这种函数式组件的写法：
-
 ``` TSX
 const App: React.FunctionComponent<{ message: string }> = ({ message }) => (
   <div>{message}</div>
 );
 ```
-
 但是，如今主流观点一致[不推荐](https://github.com/facebook/create-react-app/pull/8177)使用 `React.FunctionComponent` （或者 `React.FC` ）。
 这是一个微妙的观点，如果你同意并且想从代码中移除这些 `React.FC` 声明，可以使用 [jscodeshift mode](https://github.com/gndelia/codemod-replace-react-fc-typescript)
-
 一些与常规函数不同的差异点：
 * `React.FucntionComponent` 会显式声明返回类型，但常规函数是隐式的。
 * 提供 typechecking 和 一些属性的 autocomplete ，如 `displayName`, `propTypes`, 和 `defaultProps`
     * 需要注意的是，在 React.FucntionComponent 中使用 `defaulProps` 会有一些问题。详情见 [issue](https://github.com/typescript-cheatsheets/react/issues/87), 后文会有专门的章节讨论 `defaulProps` 这一属性。
 * 在 [React 18 类型更新](https://github.com/DefinitelyTyped/DefinitelyTyped/pull/56210) 前，`React.FunctionComponent` 提供隐式的对 Children 的定义(如下), 这是非常有争议的点, 这也是 CRA TS template 中移除 `React.FC` 的原因之一.
-
 ```TSX
 // before React 18 types
 const Title: React.FunctionComponent<{ title: string }> = ({
@@ -84,6 +79,10 @@ const VoidFunctionComponent: React.VoidFunctionComponent<Props> = ({
 ```
 :::
 
+::: tip
+* 在未来，可能会自动给 props 加上 `readonly` 属性，不过，如果 props 在 参数列表被解构，那就没什么意义了。
+  在大多数情况下，使用哪种语法几乎没有什么区别，但你可能更喜欢更明确的性质 `React.FunctionComponent`.
+
 ::: details Minor Pitfalls
 ---
 以下这些模式是不推荐的：
@@ -112,4 +111,3 @@ const MyArrayComponent = () => Array(5).fill(<div />) as any as JSX.Element;
 ```
 
 :::
-
