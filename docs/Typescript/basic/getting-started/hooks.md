@@ -183,8 +183,7 @@ function DelayedEffect(props: { timerMs: number }) {
 #### Option 1: DOM element ref
 
 [为了访问一个 DOM element](https://legacy.reactjs.org/docs/refs-and-the-dom.html):
-
-provide only the element type as argument, and use null as initial value. In this case, the returned reference will have a read-only .current that is managed by React. TypeScript expects you to give this ref to an element's ref prop:
+只提供元素类型作为参数, 并使用 null 作为初始值. 返回的 reference 会有一个由 react 管理的 read-only 的 `.current`. TS 期望你给这个 ref 赋予 element 的 ref prop:
 
 ```TSX
 function Foo() {
@@ -206,3 +205,147 @@ function Foo() {
   return <div ref={divRef}>etc</div>;
 }
 ```
+如果你确定 `divRef.current` 永远不会为 null,你也可以使用 non-null assertion 操作符 `!`:
+```TSX
+const divRef = useRef<HTMLDivElement>(null!);
+// Later... No need to check if it is null
+doSomethingWith(divRef.current);
+```
+请注意，这里使用的是不使用类型安全, 如果忘记将 ref 分配给 element, 或者 element 是条件渲染的, 会产生 runtime error.
+
+::: details 应该使用哪类 `HTMLEmenet` ?
+refs 的使用要求严格, 只给出类型 `HTMLElement` 是不够的. 如果你不知道某个 element 的类型名称,
+你可以查阅 [lib.dom.ts](https://github.com/microsoft/TypeScript/blob/v3.9.5/lib/lib.dom.d.ts#L19224-L19343), 或者故意构造一个类型错误并让 ide 提示你(如果装了类型提示插件):
+
+![image](./hooks-refs.png)
+:::
+
+#### See also
+* [Related issue by @rajivpunjabi](https://github.com/typescript-cheatsheets/react/issues/388) - [Playground](https://www.typescriptlang.org/play#code/JYWwDg9gTgLgBAKjgQwM5wEoFNkGN4BmUEIcARFDvmQNwCwAUI7hAHarwCCYYcAvHAAUASn4A+OAG9GjOHAD0CBLLnKGcxHABiwKBzgQwMYGxS4WUACbBWAczgwIcSxFwBXEFlYxkxtgDoVTQBJVmBjZAAbOAA3KLcsOAB3YEjogCNE1jc0-zgAGQBPG3tHOAAVQrAsAGVcKGAjOHTCuDdUErhWNgBabLSUVFQsWBNWA2qoX2hA9VU4AGFKXyx0AFk3H3TIxOwCOAB5dIArLHwgpHcoSm84MGJJmFbgdG74ZcsDVkjC2Y01f7yFQsdjvLAEACM-EwVBg-naWD2AB4ABLlNb5GpgZCsACiO083jEgn6kQAhMJ6HMQfpKJCFpE2IkBNg8HCEci0RisTj8VhCTBiaSKVSVIoAaoLnBQuFgFFYvFEikBpkujkMps4FgAB7VfCdLmY7F4gleOFwAByEHg7U63VYfXVg2Go1MhhG0ygf3mAHVUtF6jgYLtwUdTvguta4Bstjs9mGznCpVcbvB7u7YM90B8vj9vYgLkDqWxaeCAEzQ1n4eHDTnoo2801EknqykyObii5SmpnNifA5GMZmCzWOwOJwudwC3xjKUyiLROKRBLJf3NLJO9KanV64xj0koVifQ08k38s1Sv0DJZBxIx5DbRGhk6J5Nua5mu4PEZPOAvSNgsgnxsHmXZzIgRZyDSYIEAAzJWsI1k+BCovWp58gKcAAD5qmkQqtqKHbyCexoYRecw7IQugcAs76ptCdIQv4KZmoRcjyMRaGkU28A4aSKiUXAwwgpYtEfrcAh0mWzF0ax7bsZx3Lceetx8eqAlYPAMAABa6KJskSXAdKwTJ4kwGxCjyKy-bfK05SrDA8mWVagHAbZeScOY0CjqUE6uOgqDaRAOSfKqOYgb8KiMaZ9GSeCEIMkyMVyUwRHWYc7nSvAgUQEk6AjMQXpReWyWGdFLHeBZHEuTCQEZT8xVwaV8BxZCzUWZQMDvuMghBHASJVnCWhTLYApiH1chIqgxpGeCfCSIxAC+Yj3o+8YvvgSLyNNOLjeBGhTTNdLzVJy3reGMBbTtrB7RoB3XbNBAneCsHLatcbPhdV3GrdB1WYhw3IKNZq-W2DCLYRO7QPAljgsgORcDwVJAA)
+* [Example from Stefan Baumgartner](https://fettblog.eu/typescript-react/hooks/#useref) - [Playground](https://www.typescriptlang.org/play/?jsx=2#code/JYWwDg9gTgLgBAJQKYEMDG8BmUIjgIilQ3wFgAoCzAVwDsNgJa4AVJADxgElaxqYA6sBgALAGIQ01AM4AhfjCYAKAJRwA3hThwA9DrjBaw4CgA2waUjgB3YSLi1qp0wBo4AI35wYSZ6wCeYEgAymhQwGDw1lYoRHCmEBAA1oYA5nCY0HAozAASLACyADI8fDAAoqZIIEi0MFpwaEzS8IZllXAAvIjEMAB0MkjImAA8+cWl-JXVtTAAfEqOzioA3A1NtC1wTPIwirQAwuZoSV1wql1zGg3aenAt4RgOTqaNIkgn0g5ISAAmcDJvBA3h9TsBMAZeFNXjl-lIoEQ6nAOBZ+jddPpPPAmGgrPDEfAUS1pG5hAYvhAITBAlZxiUoRUqjU6m5RIDhOi7iIUF9RFYaqIIP9MlJpABCOCAUHJ0eDzm1oXAAGSKyHtUx9fGzNSacjaPWq6Ea6gI2Z9EUyVRrXV6gC+DRtVu0RBgxuYSnRIzm6O06h0ACpIdlfr9jExSQyOkxTP5GjkPFZBv9bKIDYSmbNpH04ABNFD+CV+nR2636kby+BETCddTlyo27w0zr4HycfC6L0lvUjLH7baHY5Jas7BRMI7AE42uYSUXed6pkY6HtMDulnQruCrCg2oA)
+
+### useImperativeHandle
+
+基于 [Stackoverflow 的答案](https://stackoverflow.com/a/69292925/5415299):
+
+```TSX
+// Countdown.tsx
+
+// Define the handle types which will be passed to the forwardRef
+export type CountdownHandle = {
+  start: () => void;
+};
+
+type CountdownProps = {};
+
+const Countdown = forwardRef<CountdownHandle, CountdownProps>((props, ref) => {
+  useImperativeHandle(ref, () => ({
+    // start() has type inference here
+    start() {
+      alert("Start");
+    },
+  }));
+
+  return <div>Countdown</div>;
+});
+```
+
+```TSX
+// The component uses the Countdown component
+
+import Countdown, { CountdownHandle } from "./Countdown.tsx";
+
+function App() {
+  const countdownEl = useRef<CountdownHandle>(null);
+
+  useEffect(() => {
+    if (countdownEl.current) {
+      // start() has type inference here as well
+      countdownEl.current.start();
+    }
+  }, []);
+
+  return <Countdown ref={countdownEl} />;
+}
+```
+
+#### See also
+* [Using ForwardRefRenderFunction](https://stackoverflow.com/a/62258685/5415299)
+
+### Custom Hooks
+如果你在自定义的 hook 中返回了数组，你可能会想要避免 TS 的类型推导（当返回的数组中包含不同类型元素时）
+[TS 3.4 const assertions](https://devblogs.microsoft.com/typescript/announcing-typescript-3-4/#const-assertions):
+
+```TSX
+import { useState } from "react";
+
+export function useLoading() {
+  const [isLoading, setState] = useState(false);
+  const load = (aPromise: Promise<any>) => {
+    setState(true);
+    return aPromise.finally(() => setState(false));
+  };
+  return [isLoading, load] as const; // infers [boolean, typeof load] instead of (boolean | typeof load)[]
+}
+```
+[TS Playground](https://www.typescriptlang.org/play/?target=5&jsx=2#code/JYWwDg9gTgLgBAJQKYEMDG8BmUIjgcilQ3wFgAoCpAD0ljkwFcA7DYCZuRgZyQBkIKACbBmAcwAUASjgBvCnDhoO3eAG1g3AcNFiANHF4wAyjBQwkAXTgBeRMRgA6HklPmkEzCgA2vKQG4FJRV4b0EhWzgJFAAFHBBNJAAuODjcRIAeFGYATwA+GRs8uSDFIzcLCRgoRiQA0rgiGEYoTlj4xMdMUR9vHIlpW2Lys0qvXzr68kUAX0DpxqRm1rgNLXDdAzDhaxRuYOZVfzgAehO4UUwkKH21ACMICG9UZgMYHLAkCEw4baFrUSqVARb5RB5PF5wAA+cHen1BfykaksFBmQA)
+
+当你解构它时, 你可以拿到正确的类型.
+
+::: details 备选方案：断言数组返回类型
+如果你在 [const assertions 的使用上有问题](https://github.com/babel/babel/issues/9800), 还可以尝试使用 assert 或者定义函数返回类型的方式:
+
+```TSX
+import { useState } from "react";
+
+export function useLoading() {
+  const [isLoading, setState] = useState(false);
+  const load = (aPromise: Promise<any>) => {
+    setState(true);
+    return aPromise.finally(() => setState(false));
+  };
+  return [isLoading, load] as [
+    boolean,
+    (aPromise: Promise<any>) => Promise<any>
+  ];
+}
+```
+
+如果有大量自定义 hooks，那么自动输入数组的辅助函数也会很有帮助:
+
+```TSX
+function tuplify<T extends any[]>(...elements: T) {
+  return elements;
+}
+
+function useArray() {
+  const numberValue = useRef(3).current;
+  const functionValue = useRef(() => {}).current;
+  return [numberValue, functionValue]; // type is (number | (() => void))[]
+}
+
+function useTuple() {
+  const numberValue = useRef(3).current;
+  const functionValue = useRef(() => {}).current;
+  return tuplify(numberValue, functionValue); // type is [number, () => void]
+}
+```
+
+:::
+
+尽管 react team 推荐在使用自定义 hooks 时返回值如果多余两个,应该使用 object 而不是数组.
+
+### More Hooks + TS reading:
+
+* [https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d](https://medium.com/@jrwebdev/react-hooks-in-typescript-88fce7001d0d)
+* [https://fettblog.eu/typescript-react/hooks/#useref](https://fettblog.eu/typescript-react/hooks/#useref)
+
+如果你正在写 React Hooks library, 不要忘记暴露类型给用户使用.
+
+### Example React Hooks + TypeScript Libraries:
+
+* https://github.com/mweststrate/use-st8
+* https://github.com/palmerhq/the-platform
+* https://github.com/sw-yx/hooks
+
+
