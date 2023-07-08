@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "publish": "sh deploy.sh",
-    "docs:dev": "vuepress dev docs",
+    "dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
   "devDependencies": {
